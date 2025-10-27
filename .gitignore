@@ -21,3 +21,4 @@ terraform/.terraform/
 # Private keys
 *.pem
 
+.env
