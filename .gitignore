@@ -1,6 +1,15 @@
 /node_modules/
 /public/build/
-
+.pem
 .DS_Store
 
 .vercel
+
+# Ignore SSH keys
+*.pem
+
+# Terraform local state & caches
+terraform/.terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.*
+
