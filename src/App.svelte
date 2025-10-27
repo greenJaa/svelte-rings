@@ -6,13 +6,17 @@ import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 // --- Firebase setup ---
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
+
+console.log(import.meta.env.VITE_FIREBASE_API_KEY);
+console.log(import.meta.env); // shows all exposed variables
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -29,21 +33,16 @@ function logout() {
     signOut(auth);
 }
 
-// Listen for auth state changes
-onAuthStateChanged(auth, async (u) => {
-    user = u;
-    if (user) {
-        await loadFromFirestore();
-    }
-});
-
 // --- Firestore persistence ---
 async function saveToFirestore() {
     if (!user) return;
+
     const userRef = doc(db, "users", user.uid);
     await setDoc(userRef, {
         rhythms: rhythms.map(r => r.store()),
-        instruments: Object.fromEntries(Object.entries(instruments).map(([k,v]) => [k,v.sym_list.map(s => s.description)])),
+        instruments: Object.fromEntries(
+            Object.entries(instruments).map(([k,v]) => [k,v.sym_list.map(s => s.description)])
+        ),
         active,
         bpm
     });
@@ -68,15 +67,29 @@ async function loadFromFirestore() {
     }
 }
 
-// --- Call saveToFirestore whenever something changes ---
-$: if (user) saveToFirestore();
+// Listen for auth changes on mount
+onMount(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (u) => {
+        user = u;
+        if (user) await loadFromFirestore();
+    });
+    return () => unsubscribe();
+});
+
+// --- Reactive Firestore saving (debounced for performance) ---
+let saveTimeout;
+$: if (user) {
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(() => saveToFirestore(), 500); // save 0.5s after last change
+}
 
 // ------------------- existing App.svelte code below -------------------
 // keep all your imports, instruments, rhythms, active, etc.
 // just place this Firebase code above your existing code
+
 </script>
 
-<!-- Add login/logout buttons somewhere in the UI -->
+<!-- Login/Logout UI -->
 {#if !user}
 <button on:click={login}>Login with Google</button>
 {:else}
@@ -84,3 +97,5 @@ $: if (user) saveToFirestore();
     Logged in as {user.displayName} <button on:click={logout}>Logout</button>
 </div>
 {/if}
+
+<!-- Your existing App.svelte UI goes here -->
