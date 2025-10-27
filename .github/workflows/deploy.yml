@@ -2,7 +2,7 @@ name: Vercel Production Deployment
 
 on:
   push:
-    branches: [ main ] # Only deploy production when pushing to the main branch
+    branches: [ cool-edit ] # Only deploy production when pushing to the main branch
 
 jobs:
   deploy:
