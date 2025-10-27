@@ -12,4 +12,12 @@
 terraform/.terraform/
 terraform/terraform.tfstate
 terraform/terraform.tfstate.*
+# Terraform local files
+.terraform/
+terraform/.terraform/
+*.tfstate
+*.tfstate.*
+
+# Private keys
+*.pem
 
