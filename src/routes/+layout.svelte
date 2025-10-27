@@ -14,10 +14,10 @@
   {#if $user}
     <span>Welcome {$user.email}</span>
     <button on:click={logout}>Logout</button>
+    <a href="/dashboard">Dashboard</a>
   {:else}
     <a href="/login">Login</a> | <a href="/register">Register</a>
   {/if}
 </nav>
 
 <slot />
-

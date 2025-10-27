@@ -8,4 +8,3 @@ export const user = writable(null);
 onAuthStateChanged(auth, (u) => {
   user.set(u);
 });
-

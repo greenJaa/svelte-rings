@@ -10,7 +10,7 @@
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       error = '';
-      window.location.href = '/';
+      window.location.href = '/dashboard';
     } catch (err) {
       error = err.message;
     }
@@ -26,3 +26,4 @@
   <p style="color:red">{error}</p>
 {/if}
 
+<a href="/login">Already have an account? Login</a>

@@ -1,7 +1,6 @@
 <script>
   import { auth } from '../lib/firebase.js';
   import { signInWithEmailAndPassword } from 'firebase/auth';
-  import { user } from '../lib/stores/user.js';
 
   let email = '';
   let password = '';
@@ -11,8 +10,7 @@
     try {
       await signInWithEmailAndPassword(auth, email, password);
       error = '';
-      // redirect to home
-      window.location.href = '/';
+      window.location.href = '/dashboard';
     } catch (err) {
       error = err.message;
     }
@@ -28,3 +26,4 @@
   <p style="color:red">{error}</p>
 {/if}
 
+<a href="/register">Don't have an account? Register</a>
