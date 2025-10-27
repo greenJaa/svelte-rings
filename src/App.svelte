@@ -23,7 +23,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const analytics = getAnalytics(app); 
 
 //console.log(import.meta.env.VITE_FIREBASE_API_KEY);
 //console.log(import.meta.env); // shows all exposed variables
