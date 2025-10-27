@@ -4,20 +4,31 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
-// --- Firebase setup ---
+// Import the functions you need from the SDKs you need
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: "AIzaSyBIHef4A_WLXDpC6G9sI5X4ua52O-6f6Cg",
+  authDomain: "svelte-rings.firebaseapp.com",
+  projectId: "svelte-rings",
+  storageBucket: "svelte-rings.firebasestorage.app",
+  messagingSenderId: "935307364369",
+  appId: "1:935307364369:web:0b311edfceda3a4caa89b0",
+  measurementId: "G-226691LZLT"
 };
 
-console.log(import.meta.env.VITE_FIREBASE_API_KEY);
-console.log(import.meta.env); // shows all exposed variables
-
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+//console.log(import.meta.env.VITE_FIREBASE_API_KEY);
+//console.log(import.meta.env); // shows all exposed variables
+
+//const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
