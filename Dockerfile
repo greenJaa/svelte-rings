@@ -1,24 +1,19 @@
-# ---- Stage 1: Build the Svelte app ----
-FROM node:18 AS builder
+# Use Debian-based Node (more stable)
+FROM node:20-bullseye
 
 WORKDIR /app
 
+# Install dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
+# Copy source and build
 COPY . .
 RUN npm run build
 
-# ---- Stage 2: Serve the built app using a lightweight web server ----
-FROM nginx:alpine
+# Expose port 5000
+EXPOSE 5000
 
-# Remove the default nginx page & copy built files
-RUN rm -rf /usr/share/nginx/html/*
-
-COPY --from=builder /app/public /usr/share/nginx/html
-
-# Expose port 80 to host machine
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+# Start app on all interfaces
+CMD ["npx", "sirv", "public", "--single", "--host", "0.0.0.0", "--port", "5000"]
 
