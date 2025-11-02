@@ -3,12 +3,12 @@ entries:
   svelte-rings:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-10-31T16:00:15.47849319+02:00"
+    created: "2025-11-02T18:08:14.721784074+02:00"
     description: A Helm chart for Kubernetes
-    digest: f59a43cda597969b3525a114160e7d496017f47b0f39b72c10f072b148d6dc2a
+    digest: 19092ba010a6742a2899d488123e55680ea1426ad5dd042bb49e83c996df38c8
     name: svelte-rings
     type: application
     urls:
     - https://greenJaa.github.io/svelte-rings/svelte-rings-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-31T16:00:15.476169263+02:00"
+generated: "2025-11-02T18:08:14.721264789+02:00"
