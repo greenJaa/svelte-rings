@@ -1,0 +1,31 @@
+name: Deploy Helm Chart to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # or 'master' — your default branch
+    paths:
+      - 'svelte-rings-chart/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Package Helm chart
+        run: |
+          cd svelte-rings-chart
+          helm package .
+          helm repo index . --url https://greenJaa.github.io/svelte-rings
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: svelte-rings-chart
+          force_orphan: true
+
