@@ -1,0 +1,41 @@
+name: Publish Helm Chart
+
+on:
+  push:
+    branches:
+      - main        # Trigger when pushing to main
+      - cool-edit   # Or any branch you prefer
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      # 1️⃣ Checkout the repo
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # 2️⃣ Set up Helm
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
+
+      # 3️⃣ Package the Helm chart
+      - name: Package Helm chart
+        run: |
+          mkdir -p ./chart-packages
+          helm package svelte-rings-chart -d ./chart-packages
+
+      # 4️⃣ Update index.yaml
+      - name: Update Helm repo index
+        run: |
+          helm repo index ./chart-packages --url https://greenJaa.github.io/svelte-rings
+
+      # 5️⃣ Publish to gh-pages
+      - name: Publish to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./chart-packages
+          publish_branch: gh-pages
+          user_name: github-actions
+          user_email: github-actions@github.com
+
