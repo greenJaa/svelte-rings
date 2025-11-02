@@ -1,0 +1,117 @@
+NAME: svelte-rings
+LAST DEPLOYED: Thu Oct 30 13:08:21 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+CHART: svelte-rings
+VERSION: 0.1.0
+APP_VERSION: 1.16.0
+USER-SUPPLIED VALUES:
+null
+
+COMPUTED VALUES:
+autoscaling:
+  enabled: false
+  maxReplicas: 5
+  minReplicas: 1
+  targetCPUUtilizationPercentage: 80
+image:
+  pullPolicy: IfNotPresent
+  repository: greenzmey/svelte-rings
+  tag: latest
+ingress:
+  enabled: false
+replicaCount: 2
+service:
+  nodePort: 31891
+  port: 5000
+  type: NodePort
+serviceAccount:
+  create: true
+  name: svelte-rings-sa
+
+HOOKS:
+---
+# Source: svelte-rings/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "svelte-rings-test-connection"
+  labels:
+    helm.sh/chart: svelte-rings-0.1.0
+    app.kubernetes.io/name: svelte-rings
+    app.kubernetes.io/instance: svelte-rings
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['svelte-rings:5000']
+  restartPolicy: Never
+MANIFEST:
+---
+# Source: svelte-rings/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: svelte-rings-sa
+  labels:
+    helm.sh/chart: svelte-rings-0.1.0
+    app.kubernetes.io/name: svelte-rings
+    app.kubernetes.io/instance: svelte-rings
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+automountServiceAccountToken:
+---
+# Source: svelte-rings/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: svelte-rings
+spec:
+  type: NodePort
+  selector:
+    app: svelte-rings
+  ports:
+    - port: 5000
+      targetPort: 5000
+      nodePort: 31891
+      name: http
+---
+# Source: svelte-rings/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: svelte-rings
+  labels:
+    helm.sh/chart: svelte-rings-0.1.0
+    app.kubernetes.io/name: svelte-rings
+    app.kubernetes.io/instance: svelte-rings
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: svelte-rings
+  template:
+    metadata:
+      labels:
+        app: svelte-rings
+    spec:
+      containers:
+        - name: svelte-rings
+          image: "greenzmey/svelte-rings:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+
+NOTES:
+1. Get the application URL by running these commands:
+  export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services svelte-rings)
+  export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo http://$NODE_IP:$NODE_PORT
