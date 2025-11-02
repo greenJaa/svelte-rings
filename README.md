@@ -1,93 +1,52 @@
-*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
+# Svelte Rings
 
----
+A Svelte web app with a Helm chart for easy Kubernetes deployment.
 
-# svelte app
+## Quick Start
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
-
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
+### Clone & Install
 
 ```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
-```
+git clone https://github.com/greenJaa/svelte-rings.git
+cd svelte-rings
+git checkout cool-edit
+npm ci
 
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
+Run Locally
 
-
-## Get started
-
-Install the dependencies...
-
-```bash
-cd svelte-app
-npm install
-```
-
-...then start [Rollup](https://rollupjs.org):
-
-```bash
 npm run dev
-```
 
-Navigate to [localhost:5000](http://localhost:5000). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
+Open http://localhost:5000
 
-By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
+in your browser.
+Build for Production
 
-
-## Building and running in production mode
-
-To create an optimised version of the app:
-
-```bash
 npm run build
-```
+npm run start
 
-You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
+Helm Chart
+
+Chart folder: svelte-rings-chart/
+Deploy via Helm
+
+# Package the chart and generate index
+helm package svelte-rings-chart
+helm repo index . --url https://greenJaa.github.io/svelte-rings
+
+# Add repo and install
+helm repo add svelte-rings https://greenJaa.github.io/svelte-rings
+helm repo update
+helm install my-svelte-app svelte-rings/svelte-rings
+
+# Check deployed resources
+kubectl get pods
+kubectl get svc
+
+License
+
+MIT
 
 
-## Single-page app mode
+This version is **short, clear, and covers both local dev and Helm deployment**.  
 
-By default, sirv will only respond to requests that match files in `public`. This is to maximise compatibility with static fileservers, allowing you to deploy your app anywhere.
-
-If you're building a single-page app (SPA) with multiple routes, sirv needs to be able to respond to requests for *any* path. You can make it so by editing the `"start"` command in package.json:
-
-```js
-"start": "sirv public --single"
-```
-
-
-## Deploying to the web
-
-### With [now](https://zeit.co/now)
-
-Install `now` if you haven't already:
-
-```bash
-npm install -g now
-```
-
-Then, from within your project folder:
-
-```bash
-cd public
-now deploy --name my-project
-```
-
-As an alternative, use the [Now desktop client](https://zeit.co/download) and simply drag the unzipped project folder to the taskbar icon.
-
-### With [surge](https://surge.sh/)
-
-Install `surge` if you haven't already:
-
-```bash
-npm install -g surge
-```
-
-Then, from within your project folder:
-
-```bash
-npm run build
-surge public my-project.surge.sh
-```
+If you want, I can also make a **super-compact version** that focuses almost entirely on Helm
