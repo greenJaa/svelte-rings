@@ -46,7 +46,3 @@ License
 
 MIT
 
-
-This version is **short, clear, and covers both local dev and Helm deployment**.  
-
-If you want, I can also make a **super-compact version** that focuses almost entirely on Helm
