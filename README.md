@@ -17,5 +17,9 @@ Get the application running quickly on your local machine.
 ```bash
 git clone [https://github.com/greenJaa/svelte-rings.git](https://github.com/greenJaa/svelte-rings.git)
 cd svelte-rings
-npm install
+npm install```
 # Alternatively, you can use 'npm ci' for clean install based on package-lock.json
+
+## Run Locally
+
+Start the development server:
