@@ -12,6 +12,7 @@ Repository: https://greenJaa.github.io/svelte-rings/
 
 # Add Helm repo
 helm repo add svelte-rings https://greenJaa.github.io/svelte-rings/
+
 helm repo update
 
 # Install chart
