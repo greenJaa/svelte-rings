@@ -47,16 +47,3 @@ To build for production:
 npm run build
 
 ⚙️ CI/CD Automation
-
-This project includes two automated GitHub Actions workflows:
-
-Workflow	Trigger	Description
-Deploy to Vercel (deploy.yml)	On push to cool-edit branch	Builds & deploys the Svelte app to Vercel
-
-svelte-rings/
-├── src/                 # SvelteKit source (routes, components)
-├── static/              # Public static files
-├── svelte-rings-chart/  # Helm chart for Kubernetes
-├── .github/workflows/   # CI/CD pipelines (Helm + Vercel)
-├── Dockerfile           # Container build definition
-└── README.md
