@@ -50,3 +50,9 @@ To build for production:
 npm run build
 
 ⚙️ CI/CD Automation
+
+Helm Charts: Automatically packaged and published to GitHub Pages on branch updates.
+
+Vercel Deployment: Pushes to the cool-edit branch trigger production deployment.
+
+Svelte App CI: Runs build, lint, and test workflows on every push or pull request to main branches.
