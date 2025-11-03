@@ -34,13 +34,13 @@ Add Helm repo
 ```
 helm repo add svelte-rings https://greenJaa.github.io/svelte-rings/
 helm repo update
-```
-Install chart
-```
+
+# Install chart
+
 helm install svelte-rings svelte-rings/svelte-rings --wait
-```
-Check service (to access your app)
-```
+
+# Check service (to access your app)
+
 kubectl get svc svelte-rings
 ```
 ## 🐳 Option 2: Run with Docker
