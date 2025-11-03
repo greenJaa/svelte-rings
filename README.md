@@ -18,7 +18,7 @@ npm run dev
 ⚪ Svelte Rings ✨
 
 A modern, reactive web application built with Svelte and SvelteKit.
-Svelte Rings delivers smooth, dynamic visualizations and supports deployments across Docker, Kubernetes (Helm), and Vercel.
+Svelte Rings supports deployments across Docker, Kubernetes (Helm), and Vercel.
 
 🚀 Deployment Options
 ## 🌀 Option 1: Deploy with Helm (Kubernetes)
