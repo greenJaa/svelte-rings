@@ -34,6 +34,7 @@ docker run -d -p 8080:3000 --name svelte-rings svelte-rings-app
 ## 💻 Option 3: Local Development
 ### Clone repo
 git clone https://github.com/greenJaa/svelte-rings.git
+
 cd svelte-rings
 
 ### Install dependencies
