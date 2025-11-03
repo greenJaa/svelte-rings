@@ -11,5 +11,4 @@ Svelte Rings supports deployments via Docker, Kubernetes (Helm), and Vercel.
 ```bash
 git clone https://github.com/greenJaa/svelte-rings.git
 cd svelte-rings
-git checkout cool-edit
 npm ci
