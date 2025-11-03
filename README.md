@@ -17,8 +17,8 @@ cd svelte-rings
 npm ci
 ```
 ### Run locally
-
-`npm run dev
+`
+npm run dev
 
 The app will be accessible at http://localhost:5000
 
