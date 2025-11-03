@@ -75,7 +75,7 @@ Access locally at http://localhost:5000
 Build for production
 ```
 npm run build
-```
+
 ⚙️ CI/CD Automation
 
     Helm Charts: Automatically packaged and published to GitHub Pages on branch updates.
