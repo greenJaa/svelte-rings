@@ -7,7 +7,7 @@
 Svelte Rings supports deployments across Docker, Kubernetes (Helm), and Vercel.
 
 ---
-
+            
 ## Quick Start
 
 ### Clone & Install
@@ -82,4 +82,4 @@ npm run build
 
     Vercel Deployment: Pushes to the cool-edit branch trigger production deployment.
 
-    Svelte App CI: Runs build, lint, and test workflows on every push or pull request to main branches.
+    Svelte App CI: Runs build, lint, and test workflows on every push or pull request to bash-install branche.
