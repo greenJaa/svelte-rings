@@ -1,7 +1,7 @@
 # Svelte Rings
 
 A Svelte web app with a Helm chart for easy Kubernetes deployment.
-
+ 
 ## Quick Start
 
 ### Clone & Install
