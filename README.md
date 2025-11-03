@@ -12,7 +12,7 @@ git clone https://github.com/greenJaa/svelte-rings.git
 cd svelte-rings
 git checkout cool-edit
 npm ci
-bash```
+
 ## **Run locally**
 npm run dev
 ⚪ Svelte Rings ✨
