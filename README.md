@@ -4,7 +4,6 @@
 [![Docker](https://img.shields.io/badge/docker-latest-blue)](https://hub.docker.com/) 
 [![Vercel](https://img.shields.io/badge/vercel-deploy-green)](https://vercel.com/)
 
-A modern, reactive web application built with Svelte and SvelteKit.  
 Svelte Rings supports deployments across Docker, Kubernetes (Helm), and Vercel.
 
 ---
