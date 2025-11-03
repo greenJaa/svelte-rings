@@ -10,36 +10,36 @@ The official Helm chart is hosted via GitHub Pages:
 
 Repository: https://greenJaa.github.io/svelte-rings/
 
-# Add Helm repo
+### Add Helm repo
 helm repo add svelte-rings https://greenJaa.github.io/svelte-rings/
 
 helm repo update
 
-# Install chart
+### Install chart
 helm install svelte-rings svelte-rings/svelte-rings --wait
 
-# Check service (to access your app)
+### Check service (to access your app)
 kubectl get svc svelte-rings
 
 
 ## 🐳 Option 2: Run with Docker
 
-# Build Docker image
+### Build Docker image
 docker build -t svelte-rings-app .
 
-# Run container (map external 8080 to internal 3000)
+### Run container (map external 8080 to internal 3000)
 docker run -d -p 8080:3000 --name svelte-rings svelte-rings-app
 
 
 ## 💻 Option 3: Local Development
-# Clone repo
+### Clone repo
 git clone https://github.com/greenJaa/svelte-rings.git
 cd svelte-rings
 
-# Install dependencies
+### Install dependencies
 npm install
 
-# Start dev server
+### Start dev server
 npm run dev
 Access locally at http://localhost:5173
 
