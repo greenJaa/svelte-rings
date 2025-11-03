@@ -6,7 +6,7 @@ A Svelte web app with a Helm chart for easy Kubernetes deployment.
 ## Quick Start
 
 ### Clone & Install
-
+ 
 ```bash
 git clone https://github.com/greenJaa/svelte-rings.git
 cd svelte-rings
