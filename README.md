@@ -29,6 +29,7 @@ The app will be accessible at http://localhost:5000
 The official Helm chart is hosted via GitHub Pages:
 
 Repository: https://greenJaa.github.io/svelte-rings/
+
 Add Helm repo
 ```
 helm repo add svelte-rings https://greenJaa.github.io/svelte-rings/
