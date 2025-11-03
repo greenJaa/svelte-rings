@@ -1,6 +1,6 @@
 Svelte Rings ⚪✨
 
-A modern, highly-reactive web application built with Svelte and SvelteKit. Svelte Rings provides a captivating, smooth visualization experience designed to be easily deployed across various environments, from local development to Kubernetes.
+A web application built with Svelte and SvelteKit. Svelte Rings provides a captivating, smooth visualization experience designed to be easily deployed across various environments, from local development to Kubernetes.
 
 Installation & Deployment
 
@@ -14,8 +14,8 @@ The Helm chart for Svelte Rings is hosted via GitHub Pages, making it easy to in
 
 First, add the official Svelte Rings repository using your GitHub Pages URL:
 
-# Add the repository. Replace greenJaa with your GitHub username if necessary.
-helm repo add svelte-rings-repo [https://greenJaa.github.io/svelte-rings/](https://greenJaa.github.io/svelte-rings/)
+# Add the repository.
+helm repo add svelte-rings-repo https://greenJaa.github.io/svelte-rings/
 # Update your local helm chart cache
 helm repo update
 
@@ -51,12 +51,12 @@ docker build -t svelte-rings-app .
 
 Start the application container, mapping the container's internal port (usually 3000 or 80) to an external port on your machine (e.g., 8080):
 
-docker run -d -p 8080:3000 --name svelte-rings-container svelte-rings-app
+docker run -d -p 5000:3000 --name svelte-rings-container svelte-rings-app
 
 
 3. View the Application
 
-The app will be accessible in your web browser at http://localhost:8080.
+The app will be accessible in your web browser at http://localhost:5000.
 
 Option 3: Local Development and Testing
 
