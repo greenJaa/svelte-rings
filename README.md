@@ -1,104 +1,61 @@
-Svelte Rings ⚪✨
+⚪ Svelte Rings ✨
 
-A web application built with Svelte and SvelteKit. Svelte Rings provides a captivating, smooth visualization experience designed to be easily deployed across various environments, from local development to Kubernetes.
+A modern, reactive web application built with Svelte and SvelteKit.
+Svelte Rings delivers smooth, dynamic visualizations and supports deployments across Docker, Kubernetes (Helm), and Vercel.
 
-Installation & Deployment
+🚀 Deployment Options
+🌀 Option 1: Deploy with Helm (Kubernetes)
 
-You have several flexible options for running Svelte Rings, from using modern containerization to a full Kubernetes deployment via Helm.
+The official Helm chart is hosted via GitHub Pages:
 
-Option 1: Kubernetes Deployment (Helm Chart)
+Repository: https://greenJaa.github.io/svelte-rings/
 
-The Helm chart for Svelte Rings is hosted via GitHub Pages, making it easy to integrate and deploy directly into your Kubernetes cluster.
-
-1. Add the Helm Repository
-
-First, add the official Svelte Rings repository using your GitHub Pages URL:
-
-# Add the repository.
-helm repo add svelte-rings-repo https://greenJaa.github.io/svelte-rings/
-# Update your local helm chart cache
+# Add Helm repo
+helm repo add svelte-rings https://greenJaa.github.io/svelte-rings/
 helm repo update
 
+# Install chart
+helm install svelte-rings svelte-rings/svelte-rings --wait
 
-2. Install the Chart
-
-You can now install the application into your Kubernetes cluster in a namespace of your choice (e.g., default):
-
-helm install svelte-rings svelte-rings-repo/svelte-rings --wait
-
-
-3. Access the Application
-
-The chart typically deploys the application as a Deployment and Service. Check your service type (usually LoadBalancer or NodePort) to find the public IP or DNS name.
-
-# Example for LoadBalancer service type
+# Check service (to access your app)
 kubectl get svc svelte-rings
 
 
-Option 2: Containerized Deployment (Docker)
+🐳 Option 2: Run with Docker
 
-If you prefer to run the application using a standard container runtime, you can build and run the Docker image yourself.
-
-1. Build the Docker Image
-
-Assuming your repository includes a standard Dockerfile, navigate to the root of the project and run:
-
-# Builds the image and tags it locally as 'svelte-rings-app'
+# Build Docker image
 docker build -t svelte-rings-app .
 
-
-2. Run the Container
-
-Start the application container, mapping the container's internal port (usually 3000 or 80) to an external port on your machine (e.g., 8080):
-
-docker run -d -p 5000:3000 --name svelte-rings-container svelte-rings-app
+# Run container (map external 8080 to internal 3000)
+docker run -d -p 8080:3000 --name svelte-rings svelte-rings-app
 
 
-3. View the Application
-
-The app will be accessible in your web browser at http://localhost:5000.
-
-Option 3: Local Development and Testing
-
-If you want to contribute, modify, or test the application locally without containers, follow the standard Svelte/Node.js setup.
-
-1. Clone and Install
-
-Clone the repository and install the dependencies:
-
-git clone [https://github.com/greenJaa/svelte-rings.git](https://github.com/greenJaa/svelte-rings.git)
+💻 Option 3: Local Development
+# Clone repo
+git clone https://github.com/greenJaa/svelte-rings.git
 cd svelte-rings
+
+# Install dependencies
 npm install
 
-
-2. Run in Development Mode
-
-Run the app in development mode for hot-reloading and easy debugging:
-
+# Start dev server
 npm run dev
+Access locally at http://localhost:5173
 
-
-The application will typically be available at http://localhost:5173 (or a similar port).
-
-3. Build for Production
-
-To create a static production build:
-
+To build for production:
 npm run build
 
+⚙️ CI/CD Automation
 
-The output will be placed in the build directory (or as configured in svelte.config.js), ready to be served by any static web server (like Nginx or an internal Node server).
+This project includes two automated GitHub Actions workflows:
 
-🛠 Project Structure
+Workflow	Trigger	Description
+Deploy to Vercel (deploy.yml)	On push to cool-edit branch	Builds & deploys the Svelte app to Vercel
 
-This project follows the standard SvelteKit directory structure:
-
-src/routes/: Your application pages and endpoints.
-
-src/lib/: Reusable components, utilities, and assets.
-
-static/: Static files that are served directly.
-
-Dockerfile: Instructions for containerizing the application.
-
-chart/: The Helm chart files for Kubernetes deployment.
+svelte-rings/
+├── src/                 # SvelteKit source (routes, components)
+├── static/              # Public static files
+├── svelte-rings-chart/  # Helm chart for Kubernetes
+├── .github/workflows/   # CI/CD pipelines (Helm + Vercel)
+├── Dockerfile           # Container build definition
+└── README.md
