@@ -12,3 +12,9 @@ Svelte Rings supports deployments via Docker, Kubernetes (Helm), and Vercel.
 git clone https://github.com/greenJaa/svelte-rings.git
 cd svelte-rings
 npm ci
+
+### Run Locally
+
+npm run dev
+
+Access the app at http://localhost:5000
