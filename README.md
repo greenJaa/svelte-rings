@@ -27,7 +27,7 @@ kubectl get svc svelte-rings
 ### Build Docker image
 docker build -t svelte-rings-app .
 
-### Run container (map external 8080 to internal 3000)
+### Run container (map external 8080 to internal 5000)
 docker run -d -p 8080:3000 --name svelte-rings svelte-rings-app
 
 
@@ -41,7 +41,7 @@ npm install
 
 ### Start dev server
 npm run dev
-Access locally at http://localhost:5173
+Access locally at http://localhost:5000
 
 To build for production:
 npm run build
