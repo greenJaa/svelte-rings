@@ -47,7 +47,7 @@ kubectl get svc svelte-rings
 docker build -t svelte-rings-app .
 
 ### Run container (map external 8080 to internal 5000)
-docker run -d -p 8080:3000 --name svelte-rings svelte-rings-app
+docker run -d -p 8080:5000 --name svelte-rings svelte-rings-app
 
 
 ## 💻 Option 3: Local Development
@@ -69,3 +69,9 @@ To build for production:
 npm run build
 
 ⚙️ CI/CD Automation
+
+Helm Charts: Automatically packaged and published to GitHub Pages on branch updates.
+
+Vercel Deployment: Pushes to the cool-edit branch trigger production deployment.
+
+Svelte App CI: Runs build, lint, and test workflows on every push or pull request to main branches.
