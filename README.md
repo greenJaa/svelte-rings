@@ -60,13 +60,13 @@ Clone repo
 ```
 git clone https://github.com/greenJaa/svelte-rings.git
 cd svelte-rings
-```
-Install dependencies
-```
+
+# Install dependencies
+
 npm install
-```
-Start dev server
-```
+
+# Start dev server
+
 npm run dev
 ```
 Access locally at http://localhost:5000
