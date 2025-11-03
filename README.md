@@ -16,7 +16,6 @@ First, add the official Svelte Rings repository using your GitHub Pages URL:
 
 # Add the repository. Replace greenJaa with your GitHub username if necessary.
 helm repo add svelte-rings-repo [https://greenJaa.github.io/svelte-rings/](https://greenJaa.github.io/svelte-rings/)
-
 # Update your local helm chart cache
 helm repo update
 
