@@ -28,7 +28,7 @@ kubectl get svc svelte-rings
 docker build -t svelte-rings-app .
 
 ### Run container (map external 8080 to internal 5000)
-docker run -d -p 8080:3000 --name svelte-rings svelte-rings-app
+docker run -d -p 8080:5000 --name svelte-rings svelte-rings-app
 
 
 ## 💻 Option 3: Local Development
