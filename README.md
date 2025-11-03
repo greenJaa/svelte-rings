@@ -1,93 +1,105 @@
-*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
+Svelte Rings ⚪✨
 
----
- 
-# svelte app
+A modern, highly-reactive web application built with Svelte and SvelteKit. Svelte Rings provides a captivating, smooth visualization experience designed to be easily deployed across various environments, from local development to Kubernetes.
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
+Installation & Deployment
 
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
+You have several flexible options for running Svelte Rings, from using modern containerization to a full Kubernetes deployment via Helm.
 
-```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
-```
+Option 1: Kubernetes Deployment (Helm Chart)
 
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
+The Helm chart for Svelte Rings is hosted via GitHub Pages, making it easy to integrate and deploy directly into your Kubernetes cluster.
+
+1. Add the Helm Repository
+
+First, add the official Svelte Rings repository using your GitHub Pages URL:
+
+# Add the repository. Replace greenJaa with your GitHub username if necessary.
+helm repo add svelte-rings-repo [https://greenJaa.github.io/svelte-rings/](https://greenJaa.github.io/svelte-rings/)
+
+# Update your local helm chart cache
+helm repo update
 
 
-## Get started
+2. Install the Chart
 
-Install the dependencies...
+You can now install the application into your Kubernetes cluster in a namespace of your choice (e.g., default):
 
-```bash
-cd svelte-app
+helm install svelte-rings svelte-rings-repo/svelte-rings --wait
+
+
+3. Access the Application
+
+The chart typically deploys the application as a Deployment and Service. Check your service type (usually LoadBalancer or NodePort) to find the public IP or DNS name.
+
+# Example for LoadBalancer service type
+kubectl get svc svelte-rings
+
+
+Option 2: Containerized Deployment (Docker)
+
+If you prefer to run the application using a standard container runtime, you can build and run the Docker image yourself.
+
+1. Build the Docker Image
+
+Assuming your repository includes a standard Dockerfile, navigate to the root of the project and run:
+
+# Builds the image and tags it locally as 'svelte-rings-app'
+docker build -t svelte-rings-app .
+
+
+2. Run the Container
+
+Start the application container, mapping the container's internal port (usually 3000 or 80) to an external port on your machine (e.g., 8080):
+
+docker run -d -p 8080:3000 --name svelte-rings-container svelte-rings-app
+
+
+3. View the Application
+
+The app will be accessible in your web browser at http://localhost:8080.
+
+Option 3: Local Development and Testing
+
+If you want to contribute, modify, or test the application locally without containers, follow the standard Svelte/Node.js setup.
+
+1. Clone and Install
+
+Clone the repository and install the dependencies:
+
+git clone [https://github.com/greenJaa/svelte-rings.git](https://github.com/greenJaa/svelte-rings.git)
+cd svelte-rings
 npm install
-```
 
-...then start [Rollup](https://rollupjs.org):
 
-```bash
+2. Run in Development Mode
+
+Run the app in development mode for hot-reloading and easy debugging:
+
 npm run dev
-```
-
-Navigate to [localhost:5000](http://localhost:5000). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
-
-By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
 
 
-## Building and running in production mode
+The application will typically be available at http://localhost:5173 (or a similar port).
 
-To create an optimised version of the app:
+3. Build for Production
 
-```bash
+To create a static production build:
+
 npm run build
-```
-
-You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
 
 
-## Single-page app mode
+The output will be placed in the build directory (or as configured in svelte.config.js), ready to be served by any static web server (like Nginx or an internal Node server).
 
-By default, sirv will only respond to requests that match files in `public`. This is to maximise compatibility with static fileservers, allowing you to deploy your app anywhere.
+🛠 Project Structure
 
-If you're building a single-page app (SPA) with multiple routes, sirv needs to be able to respond to requests for *any* path. You can make it so by editing the `"start"` command in package.json:
+This project follows the standard SvelteKit directory structure:
 
-```js
-"start": "sirv public --single"
-```
+src/routes/: Your application pages and endpoints.
 
+src/lib/: Reusable components, utilities, and assets.
 
-## Deploying to the web
+static/: Static files that are served directly.
 
-### With [now](https://zeit.co/now)
+Dockerfile: Instructions for containerizing the application.
 
-Install `now` if you haven't already:
-
-```bash
-npm install -g now
-```
-
-Then, from within your project folder:
-
-```bash
-cd public
-now deploy --name my-project
-```
-
-As an alternative, use the [Now desktop client](https://zeit.co/download) and simply drag the unzipped project folder to the taskbar icon.
-
-### With [surge](https://surge.sh/)
-
-Install `surge` if you haven't already:
-
-```bash
-npm install -g surge
-```
-
-Then, from within your project folder:
-
-```bash
-npm run build
-surge public my-project.surge.sh
-```
+chart/: The Helm chart files for Kubernetes deployment.
