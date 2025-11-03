@@ -4,7 +4,7 @@ A modern, reactive web application built with Svelte and SvelteKit.
 Svelte Rings delivers smooth, dynamic visualizations and supports deployments across Docker, Kubernetes (Helm), and Vercel.
 
 🚀 Deployment Options
-🌀 Option 1: Deploy with Helm (Kubernetes)
+## 🌀 Option 1: Deploy with Helm (Kubernetes)
 
 The official Helm chart is hosted via GitHub Pages:
 
@@ -22,7 +22,7 @@ helm install svelte-rings svelte-rings/svelte-rings --wait
 kubectl get svc svelte-rings
 
 
-🐳 Option 2: Run with Docker
+## 🐳 Option 2: Run with Docker
 
 # Build Docker image
 docker build -t svelte-rings-app .
@@ -31,7 +31,7 @@ docker build -t svelte-rings-app .
 docker run -d -p 8080:3000 --name svelte-rings svelte-rings-app
 
 
-💻 Option 3: Local Development
+## 💻 Option 3: Local Development
 # Clone repo
 git clone https://github.com/greenJaa/svelte-rings.git
 cd svelte-rings
