@@ -42,9 +42,11 @@ npm install
 
 ### Start dev server
 npm run dev
+
 Access locally at http://localhost:5000
 
 To build for production:
+
 npm run build
 
 ⚙️ CI/CD Automation
