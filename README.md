@@ -82,12 +82,44 @@ npm run build
     Helm Charts: Automatically packaged and published to GitHub Pages on branch updates.
 
     Vercel Deployment: Pushes to the cool-edit branch trigger production deployment.
+## Project Structure
 
-    Svelte App CI: Runs build, lint, and test workflows on every push or pull request to bash-install branche.
-Directory/File,Description
-Dockerfile,Instructions for building a Docker container image to package the application.
-"Chart.yaml, values.yaml, templates/",The complete structure for a Helm Chart. This allows for easy and standardized deployment of the application onto a Kubernetes cluster.
-ansible/hosts.ini,"Configuration for Ansible, a tool used for configuration management and automated server provisioning/deployment."
-terraform/,"Contains Terraform configuration (main.tf, .tfstate files). Terraform is an Infrastructure as Code (IaC) tool, used here to likely provision the underlying cloud resources (like EC2 instances or the Kubernetes cluster itself) before deploying the app."
-my-ec2-key.pem,"A private key file, almost certainly used by Ansible or a Terraform provisioner to securely connect to a cloud instance (like AWS EC2)."
-"CONTRIBUTORS.md, README.md",Standard documentation files for project information and instructions.
+├── ansible/
+│ └── hosts.ini
+├── Chart.yaml
+├── CONTRIBUTORS.md
+├── Dockerfile
+├── my-ec2-key.pem
+├── package.json
+├── package-lock.json
+├── public/
+│ ├── build/
+│ │ ├── bundle.css
+│ │ ├── bundle.js
+│ │ └── bundle.js.map
+│ ├── favicon.png
+│ ├── font/
+│ ├── global.css
+│ ├── index.html
+│ └── sounds/
+├── README.md
+├── rollup.config.js
+├── src/
+│ ├── App.svelte
+│ ├── routes/
+│ │ ├── dashboard.svelte
+│ │ ├── login/
+│ │ │ └── +page.svelte
+│ │ └── register.svelte
+│ └── lib/
+│ ├── firebase.js
+│ └── stores/
+│ └── user.js
+├── templates/
+│ ├── deployment.yaml
+│ ├── ingress.yaml
+│ └── service.yaml
+├── terraform/
+│ ├── main.tf
+│ └── terraform.tfstate
+└── values.yaml
