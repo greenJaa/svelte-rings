@@ -24,7 +24,7 @@ The app will be accessible at http://localhost:5000
 
 .
 # Deployment Options
-## Option 1: Deploy with Helm (Kubernetes)
+## ⚓ Option 1: Deploy with Helm (Kubernetes)
 
 The official Helm chart is hosted via GitHub Pages:
 
