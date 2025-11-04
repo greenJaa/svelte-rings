@@ -84,42 +84,108 @@ npm run build
     Vercel Deployment: Pushes to the cool-edit branch trigger production deployment.
 ## Project Structure
 ```
-├── ansible/
-│ └── hosts.ini
-├── Chart.yaml
+.
+├── ansible
+│   └── hosts.ini
 ├── CONTRIBUTORS.md
 ├── Dockerfile
 ├── my-ec2-key.pem
 ├── package.json
 ├── package-lock.json
-├── public/
-│ ├── build/
-│ │ ├── bundle.css
-│ │ ├── bundle.js
-│ │ └── bundle.js.map
-│ ├── favicon.png
-│ ├── font/
-│ ├── global.css
-│ ├── index.html
-│ └── sounds/
+├── public
+│   ├── build
+│   │   ├── bundle.css
+│   │   ├── bundle.css.map
+│   │   ├── bundle.js
+│   │   └── bundle.js.map
+│   ├── favicon.png
+│   ├── font
+│   │   ├── GoodTimes.otf
+│   │   ├── rings.eot
+│   │   ├── rings.svg
+│   │   ├── rings.ttf
+│   │   ├── rings.woff
+│   │   ├── rings.woff2
+│   │   └── Skranji-Regular.ttf
+│   ├── global.css
+│   ├── index.html
+│   └── sounds
+│       ├── beat-wood-high.mp3
+│       ├── beat-wood.mp3
+│       ├── clap.mp3
+│       ├── djembe-base.mp3
+│       ├── djembe-slap.mp3
+│       ├── djembe-tone.mp3
+│       ├── dundunba.mp3
+│       ├── kenkeni.mp3
+│       ├── sangban-closed.mp3
+│       ├── sangban.mp3
+│       └── shake.mp3
 ├── README.md
 ├── rollup.config.js
-├── src/
-│ ├── App.svelte
-│ ├── routes/
-│ │ ├── dashboard.svelte
-│ │ ├── login/
-│ │ │ └── +page.svelte
-│ │ └── register.svelte
-│ └── lib/
-│ ├── firebase.js
-│ └── stores/
-│ └── user.js
-├── templates/
-│ ├── deployment.yaml
-│ ├── ingress.yaml
-│ └── service.yaml
-├── terraform/
-│ ├── main.tf
-│ └── terraform.tfstate
-└── values.yaml
+├── src
+│   ├── App.svelte
+│   ├── arrange.js
+│   ├── attack.js
+│   ├── bpm_select.svelte
+│   ├── circle.svelte
+│   ├── colors.js
+│   ├── debug.js
+│   ├── debug_layer.svelte
+│   ├── dot_next.svelte
+│   ├── dot_rect.svelte
+│   ├── dot.svelte
+│   ├── episode_bar.svelte
+│   ├── episode.js
+│   ├── instrument_bar.svelte
+│   ├── instrument.js
+│   ├── lib
+│   │   ├── firebase.js
+│   │   ├── firebase.js.old
+│   │   └── stores
+│   │       └── user.js
+│   ├── longpress.js
+│   ├── main.js
+│   ├── phrase.js
+│   ├── play_button.svelte
+│   ├── pointer.js
+│   ├── progress_circle.svelte
+│   ├── pulse.js
+│   ├── rhythm.js
+│   ├── rhythm_menu.svelte
+│   ├── routes
+│   │   ├── dashboard.svelte
+│   │   ├── +layout.svelte
+│   │   ├── login
+│   │   │   └── +page.svelte
+│   │   ├── login.svelte
+│   │   └── register.svelte
+│   ├── sounds.js
+│   ├── symbols.js
+│   ├── utils.js
+│   └── volume_view.svelte
+├── svelte-rings-chart
+│   ├── Chart.yaml
+│   ├── templates
+│   │   ├── deployment.yaml
+│   │   ├── _helpers.tpl
+│   │   ├── hpa.yaml
+│   │   ├── ingress.yaml
+│   │   ├── NOTES.txt
+│   │   ├── serviceaccount.yaml
+│   │   ├── service.yaml
+│   │   └── tests
+│   │       └── test-connection.yaml
+│   └── values.yaml
+├── svelte-rings.yaml
+└── terraform
+    ├── k8s-key.pub
+    ├── main.tf
+    ├── main.tf.old
+    ├── svelte-rings.yaml
+    ├── terraform.tfstate
+    ├── terraform.tfstate.1759573608.backup
+    └── terraform.tfstate.backup
+
+15 directories, 87 files
+
