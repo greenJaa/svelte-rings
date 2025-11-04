@@ -22,3 +22,5 @@ terraform/.terraform/
 *.pem
 
 .env
+
+k8s-key
