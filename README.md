@@ -83,7 +83,7 @@ npm run build
 
     Vercel Deployment: Pushes to the cool-edit branch trigger production deployment.
 ## Project Structure
-
+```
 ├── ansible/
 │ └── hosts.ini
 ├── Chart.yaml
