@@ -22,7 +22,7 @@ npm run dev
 ```
 The app will be accessible at http://localhost:5000
 
-.
+
 # Deployment Options
 ## ⚓ Option 1: Deploy with Helm (Kubernetes)
 
@@ -71,7 +71,7 @@ npm run dev
 ```
 Access locally at http://localhost:5000
 
-.
+
 Build for production
 ```
 npm run build
