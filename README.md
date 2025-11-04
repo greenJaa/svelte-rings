@@ -89,7 +89,6 @@ npm run build
 │   └── hosts.ini
 ├── CONTRIBUTORS.md
 ├── Dockerfile
-├── my-ec2-key.pem
 ├── package.json
 ├── package-lock.json
 ├── public
