@@ -2,25 +2,28 @@ name: Vercel Production Deployment
 
 on:
   push:
-    branches: [ cool-edit ]  # Deploy only when pushing to this branch
+    branches: [ cool-edit ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+      #Checkout repo
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      #Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      #Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # 🔐 Create .env file from GitHub Secrets
+      #Create .env file from GitHub Secrets
       - name: Create .env file
         run: |
           echo "VITE_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}" >> .env
@@ -31,9 +34,11 @@ jobs:
           echo "VITE_FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID }}" >> .env
           echo "VITE_FIREBASE_MEASUREMENT_ID=${{ secrets.FIREBASE_MEASUREMENT_ID }}" >> .env
 
+      #Build app
       - name: Build app
         run: npm run build
 
+      #Deploy to Vercel
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
         with:
@@ -41,4 +46,3 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prod'
-          working-directory: ./
