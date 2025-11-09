@@ -22,4 +22,4 @@ terraform/.terraform/
 *.pem
 
 .env
-k8s-key
+k8s-keysvelte-rings.tar
