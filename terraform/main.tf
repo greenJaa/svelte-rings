@@ -135,10 +135,17 @@ resource "aws_security_group" "k8s_sg" {
   }
 
   ingress {
+<<<<<<< HEAD
     from_port   = 6443
     to_port     = 6443
     protocol    = "tcp"
     self        = true
+=======
+    from_port = 6443
+    to_port   = 6443
+    protocol  = "tcp"
+    self      = true
+>>>>>>> f2ab32fdb65281f72a145b9f4309d7ded6f4d189
   }
 
   ingress {
@@ -197,3 +204,7 @@ output "master_ip" {
 output "worker_ips" {
   value = aws_instance.k8s_worker[*].private_ip
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> f2ab32fdb65281f72a145b9f4309d7ded6f4d189
