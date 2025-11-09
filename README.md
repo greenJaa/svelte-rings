@@ -1,5 +1,5 @@
 # Svelte Rings 
-
+ 
 [![Helm Chart](https://img.shields.io/badge/helm-v0.1.0-blue)](https://greenJaa.github.io/svelte-rings/) 
 [![Docker](https://img.shields.io/badge/docker-latest-blue)](https://hub.docker.com/) 
 [![Vercel](https://img.shields.io/badge/vercel-deploy-green)](https://vercel.com/)
