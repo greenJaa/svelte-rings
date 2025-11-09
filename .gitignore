@@ -23,3 +23,4 @@ terraform/.terraform/
 
 .env
 k8s-keysvelte-rings.tar
+*.tar
