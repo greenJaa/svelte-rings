@@ -20,7 +20,7 @@ terraform/.terraform/
 
 # Private keys
 *.pem
-
+k8s-key
 .env
 k8s-keysvelte-rings.tar
 *.tar
