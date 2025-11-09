@@ -14,7 +14,7 @@ data "aws_ami" "debian" {
   owners      = ["136693071363"] # Debian official AMI owner
 
   filter {
-    name   = "name"
+    name  = "name"
     values = ["debian-12-amd64-*"]
   }
 }
@@ -26,7 +26,7 @@ data "aws_vpc" "default" {
 
 data "aws_subnets" "default" {
   filter {
-    name   = "vpc-id"
+    name  = "vpc-id"
     values = [data.aws_vpc.default.id]
   }
 }
@@ -63,8 +63,16 @@ resource "aws_security_group" "k8s_sg" {
     to_port     = 6443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    self = true
   }
-
+  ingress {
+    from_port = 0
+    to_port   = 65535
+    protocol  = "tcp"
+    # This setting allows ingress traffic from any resource
+    # that is also assigned to this specific Security Group.
+    self = true
+  }
   egress {
     from_port   = 0
     to_port     = 0
@@ -90,17 +98,6 @@ resource "aws_instance" "k8s_master" {
     Name = "k8s-master"
   }
 
-  user_data = <<-EOF
-              #!/bin/bash
-              apt update && apt install -y docker.io apt-transport-https curl
-              curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-              echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
-              apt update
-              apt install -y kubelet kubeadm kubectl
-              kubeadm init --pod-network-cidr=10.244.0.0/16 > /root/kubeadm-init.out
-              mkdir -p /root/.kube
-              cp -i /etc/kubernetes/admin.conf /root/.kube/config
-              EOF
 }
 
 # Kubernetes worker nodes
@@ -117,14 +114,7 @@ resource "aws_instance" "k8s_worker" {
     Name = "k8s-worker-${count.index + 1}"
   }
 
-  user_data = <<-EOF
-              #!/bin/bash
-              apt update && apt install -y docker.io apt-transport-https curl
-              curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-              echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
-              apt update
-              apt install -y kubelet kubeadm kubectl
-              EOF
+
 }
 
 # Output IPs
@@ -135,4 +125,3 @@ output "master_ip" {
 output "worker_ips" {
   value = aws_instance.k8s_worker[*].public_ip
 }
-
