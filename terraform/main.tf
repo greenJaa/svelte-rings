@@ -8,34 +8,110 @@ resource "aws_key_pair" "k8s_key" {
   public_key = file("${path.module}/k8s-key.pub")
 }
 
-# Get latest Debian AMI
-data "aws_ami" "debian" {
-  most_recent = true
-  owners      = ["136693071363"] # Debian official AMI owner
+# Custom VPC
+resource "aws_vpc" "k8s_vpc" {
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_support   = true
+  enable_dns_hostnames = true
 
-  filter {
-    name  = "name"
-    values = ["debian-12-amd64-*"]
+  tags = {
+    Name = "k8s-vpc"
   }
 }
 
-# Get default VPC and subnets
-data "aws_vpc" "default" {
-  default = true
-}
+# Public subnet (master)
+resource "aws_subnet" "public" {
+  vpc_id                  = aws_vpc.k8s_vpc.id
+  cidr_block              = "10.0.1.0/24"
+  map_public_ip_on_launch = true
+  availability_zone       = "eu-central-1a"
 
-data "aws_subnets" "default" {
-  filter {
-    name  = "vpc-id"
-    values = [data.aws_vpc.default.id]
+  tags = {
+    Name = "k8s-public-subnet"
   }
 }
 
-# Security group for Kubernetes nodes
+# Private subnets (workers)
+resource "aws_subnet" "private" {
+  count                   = 2
+  vpc_id                  = aws_vpc.k8s_vpc.id
+  cidr_block              = cidrsubnet("10.0.0.0/16", 8, count.index + 2)
+  map_public_ip_on_launch = false
+  availability_zone       = "eu-central-1a"
+
+  tags = {
+    Name = "k8s-private-subnet-${count.index + 1}"
+  }
+}
+
+# Internet Gateway for public subnet
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.k8s_vpc.id
+
+  tags = {
+    Name = "k8s-igw"
+  }
+}
+
+# NAT Gateway for private subnets
+resource "aws_eip" "nat_eip" {
+  vpc = true
+}
+
+resource "aws_nat_gateway" "nat" {
+  allocation_id = aws_eip.nat_eip.id
+  subnet_id     = aws_subnet.public.id
+  depends_on    = [aws_internet_gateway.igw]
+
+  tags = {
+    Name = "k8s-nat"
+  }
+}
+
+# Route table for public subnet
+resource "aws_route_table" "public_rt" {
+  vpc_id = aws_vpc.k8s_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    Name = "k8s-public-rt"
+  }
+}
+
+resource "aws_route_table_association" "public_rta" {
+  subnet_id      = aws_subnet.public.id
+  route_table_id = aws_route_table.public_rt.id
+}
+
+# Route table for private subnets
+resource "aws_route_table" "private_rt" {
+  vpc_id = aws_vpc.k8s_vpc.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat.id
+  }
+
+  tags = {
+    Name = "k8s-private-rt"
+  }
+}
+
+resource "aws_route_table_association" "private_rta" {
+  count          = length(aws_subnet.private)
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private_rt.id
+}
+
+# Security group
 resource "aws_security_group" "k8s_sg" {
   name        = "k8s-sg"
-  description = "Allow SSH, Kubernetes, and HTTP/HTTPS"
-  vpc_id      = data.aws_vpc.default.id
+  description = "Allow SSH, Kubernetes, HTTP/HTTPS"
+  vpc_id      = aws_vpc.k8s_vpc.id
 
   ingress {
     from_port   = 22
@@ -62,17 +138,16 @@ resource "aws_security_group" "k8s_sg" {
     from_port   = 6443
     to_port     = 6443
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-    self = true
+    self        = true
   }
+
   ingress {
     from_port = 0
     to_port   = 65535
     protocol  = "tcp"
-    # This setting allows ingress traffic from any resource
-    # that is also assigned to this specific Security Group.
-    self = true
+    self      = true
   }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -85,11 +160,11 @@ resource "aws_security_group" "k8s_sg" {
   }
 }
 
-# Kubernetes master node
+# Kubernetes master (public subnet)
 resource "aws_instance" "k8s_master" {
   ami                         = data.aws_ami.debian.id
   instance_type               = "t3.medium"
-  subnet_id                   = data.aws_subnets.default.ids[0]
+  subnet_id                   = aws_subnet.public.id
   vpc_security_group_ids      = [aws_security_group.k8s_sg.id]
   key_name                    = aws_key_pair.k8s_key.key_name
   associate_public_ip_address = true
@@ -97,31 +172,28 @@ resource "aws_instance" "k8s_master" {
   tags = {
     Name = "k8s-master"
   }
-
 }
 
-# Kubernetes worker nodes
+# Kubernetes workers (private subnets)
 resource "aws_instance" "k8s_worker" {
   count                       = 2
   ami                         = data.aws_ami.debian.id
   instance_type               = "t3.small"
-  subnet_id                   = data.aws_subnets.default.ids[count.index % length(data.aws_subnets.default.ids)]
+  subnet_id                   = aws_subnet.private[count.index].id
   vpc_security_group_ids      = [aws_security_group.k8s_sg.id]
   key_name                    = aws_key_pair.k8s_key.key_name
-  associate_public_ip_address = true
+  associate_public_ip_address = false
 
   tags = {
     Name = "k8s-worker-${count.index + 1}"
   }
-
-
 }
 
-# Output IPs
+# Outputs
 output "master_ip" {
   value = aws_instance.k8s_master.public_ip
 }
 
 output "worker_ips" {
-  value = aws_instance.k8s_worker[*].public_ip
+  value = aws_instance.k8s_worker[*].private_ip
 }
