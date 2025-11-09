@@ -9,6 +9,7 @@
     "deploy-prod": "now --prod"
   },
   "devDependencies": {
+    "@rollup/plugin-replace": "^6.0.0",
     "@rollup/plugin-commonjs": "^11.0.0",
     "@rollup/plugin-node-resolve": "^7.0.0",
     "rollup": "^2.0.0",
