@@ -1,7 +1,7 @@
 <script>
 import { onMount } from "svelte";
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithRedirect, GoogleAuthProvider, signOut, onAuthStateChanged } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 // Import the functions you need from the SDKs you need
@@ -38,7 +38,7 @@ let user = null;
 // --- Authentication ---
 function login() {
     const provider = new GoogleAuthProvider();
-    signInWithRedirect(auth, provider);
+    signInWithPopup(auth, provider);
 }
 
 function logout() {
