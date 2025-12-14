@@ -38,7 +38,7 @@ let user = null;
 // --- Authentication ---
 function login() {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider);
+    signInWithRedirect(auth, provider);
 }
 
 function logout() {
