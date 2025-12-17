@@ -1,4 +1,4 @@
-# Svelte Rings   
+# Svelte Rings    
 https://svelte-rings-zo5bl1mxp-oleg-ischouks-projects.vercel.app/ 
 
 [![Helm Chart](https://img.shields.io/badge/helm-v0.1.0-blue)](https://greenJaa.github.io/svelte-rings/) 
